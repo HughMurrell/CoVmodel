@@ -32,11 +32,11 @@ from the nearest neighbor in the cleaned data set.
 obtained by running `TempInterp` notebook
 
 
-### Animation
+### Visualisation
 
-Below is a 52 frame animation of average temperatures for airports around the world.
+Below is a a visualisation of the early breakout of COVID-19 in South Africa.
 
-![alt text](https://github.com/HughMurrell/WorldTempsWeekly/blob/master/anim_world_temp.gif "World Airports temperature animation")
+![alt text]("https://github.com/HughMurrell/CoVmodel/SIRjulia/covid_plots/SIRfitSouth Africa.png" "COVID-19 South Africa")
 
-This animation can be generated using the `TempInterp` notebook.
+This graphic can be generated using the `covid_sir` notebook.
 
