@@ -36,7 +36,7 @@ obtained by running `TempInterp` notebook
 
 Below is a a visualisation of the early breakout of COVID-19 in South Africa.
 
-![alt text](https://github.com/HughMurrell/CoVmodel/SIRjulia/covid_plots/SIRfitSouthAfrica.png "COVID-19 South Africa")
+![alt text](https://github.com/HughMurrell/CoVmodel/blob/master/SIRjulia/covid_plots/SIRfitSouthAfrica.png "COVID-19 South Africa")
 
 This graphic can be generated using the `covid_sir` notebook.
 
