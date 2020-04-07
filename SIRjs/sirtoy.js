@@ -126,7 +126,7 @@ function run_SIR() {
 }
 
 function update_plot () {
- plot.setData([timeseries.D, timeseries.C, timeseries.I, timeseries.R]);
+ plot.setData([timeseries.D, timeseries.I, timeseries.R, timeseries.C ]);
  plot.setupGrid();
  plot.draw();
 }

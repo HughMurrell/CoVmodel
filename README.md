@@ -1,36 +1,29 @@
 # CoVmodel
 
-## Simple SIR model for COVID-19 breakout in South Africa
+## Simple SIR model for COVID-19 breakout from John Hopkins data
 
 In this repository we present a Julia notebook and a JavaScript app for
 simulating the COVID-19 breakout in South Africa using a simple SIR model
 and the case counts from John Hopkins data set.
 
-### `TempDataClean`
+### `SIRjulia`
 
-This notebook gives some idea on how the data sets from NOAA were cleaned
-in order to generate the latest recorded average monthly temperatures for
-weather stations around the globe.
+This directory contains a Jupyter notebook that uses discrete simulation
+and QuadDirect optimisation to fit a simple piecewise SIR model to
+John Hopkins case coun data. The piecewise nature of the model allows
+the user to measure the effect of government interventions.
 
-It is not possible to run this notebook as is because the input data from
-NOAA is too large storage on github repositories
+### `SIRjs`
 
-
-### `TempInterp`
-
-This notebook reads the cleaned version of NOAA monthly temperature data from weather stations
-around the world and then iterpolates weekly temperatures for any point on the globe
-from the nearest neighbor in the cleaned data set.
+This directory contains a javascript code for running SIR simulations
+in the web browser. Data from John Hopkins, cleaned by the julia notebook
+above is loaded by the script and then the user can experiment with
+the SIR parameters and obtain simulated predictions of how the 
+pandemic will play out.
 
 ### Data Sets
 
-`data_clean.csv` cleaned NOAA average monthly temperatures for stations on the globe.
-
-`airports.csv` list of airports around the globe with their geo-coordinates
-
-`airports_temp_augmented.csv` same as `airports` data but augmented by average weekly temperatures
-obtained by running `TempInterp` notebook
-
+`data_jh_clean.csv` cleaned John Hopkins case counts for javascript simulation runs
 
 ### Visualisation
 

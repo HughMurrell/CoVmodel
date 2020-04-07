@@ -11,6 +11,8 @@
  </head>
 
 <body>
+    
+    <h2> SIR discrete model for COVID-19 case counts from John Hopkins </h2>
 
   <div id="container">
 
@@ -25,16 +27,26 @@
 -->
  
  <div id="controls">
-   <span>p(<span style="color: #00f">S</span>  &rarr; <span style="color: #f00">I</span> ) > <input id="p_SI" type="text" name="p_SI" value="0.00" /> > <input id="p_SI_ld" type="text" name="p_SI_ld" value="0.00" /></span><br />
-   <span>p(<span style="color: #f00">I</span> &rarr; <span style="color: #0f0">R</span>) > <input id="p_IR" type="text" name="p_IR" value="0.00" /> > <input id="p_IR_ld" type="text" name="p_IR_ld" value="0.00" /></span><br /><br /><br />
+    &beta; &rarr;  <input id="p_SI" type="text" name="p_SI" value="0.00" /> &rarr; <input id="p_SI_ld" type="text" name="p_SI_ld" value="0.00" /><br />
+    &gamma; &rarr; <input id="p_IR" type="text" name="p_IR" value="0.00" /> &rarr; <input id="p_IR_ld" type="text" name="p_IR_ld" value="0.00" /><br />
+    <br />
+    
+    <math>
+           S<sub>n+1</sub> = S<sub>n</sub> - &beta; S<sub>n</sub> I<sub>n</sub> <br />
+           I<sub>n+1</sub> = I<sub>n</sub> + &beta; S<sub>n</sub> I<sub>n</sub> - &gamma; I<sub>n</sub> <br />
+           R<sub>n+1</sub> = R<sub>n</sub> + &gamma; I<sub>n</sub> <br />
+           C<sub>n+1</sub> = I<sub>n+1</sub> + R<sub>n+1</sub> <br />
+    </math>
+    
+    <br /><br />
+    
    <span><button id="reset-button">reset</button></span>
    <span><button id="start-button">start</button></span>
    <span><button id="stop-button">stop</button></span>
    <span><button id="continue-button">continue</button></span>
 
  </div>
-
- 
+    
   <script type="text/javascript" src="sirtoy.js"></script>
   
  </body>                                                                 
