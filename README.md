@@ -1,20 +1,20 @@
 # CoVmodel
 
-## Simple SIR model for COVID-19 breakout from John Hopkins data
+## Simple SIR models for COVID-19 breakout
 
-In this repository we present a Julia notebook and a JavaScript app for
-simulating the COVID-19 breakout in South Africa using a simple SIR model
-and the case counts from John Hopkins data set.
+In this repository we present a Julia notebook and two JavaScript apps for
+simulating the COVID-19 breakout in South Africa and outher countries using 
+a simple SIR model and the case counts open data sets.
 
 ### `SIRjulia`
 
 This directory contains a Jupyter notebook that uses `julia` and
-`QuadDIRECT` to perform discrete simulation
+the `Optim` package to perform discrete simulation
 and optimisation to fit a simple piecewise SIR model to
 John Hopkins case count data. The piecewise nature of the model allows
 the user to observe the effect of government interventions.
 
-### `SIRjs`
+### `SIRjh`
 
 This directory contains a javascript code for running discrete piecewise 
 SIR simulations in the web browser. 
@@ -23,9 +23,21 @@ above is loaded by the script and then the user can experiment with
 the SIR parameters and obtain simulated predictions of how the 
 pandemic will play out.
 
+### `SIRou`
+
+This directory contains a javascript code for running discrete piecewise 
+SIR simulations in the web browser. 
+Case counts and Stringency indices from Oxford University are used 
+by the script and then the user can experiment with
+the SIR parameters for simulated predictions. 
+An attempt will be made to enable the app itself to optimise SIR parameters.
+
 ### Data Sets
 
-`data_jh_clean.csv` cleaned John Hopkins case counts for javascript simulation runs
+`data_jh_clean.csv` cleaned John Hopkins case counts for javascript simulation runs.
+`confirmedcases-Table 1.csv` case counts from Oxford
+`stringencyindex-Table 1.csv` daily stringency index from Oxford
+`wb_population.csv` population data from World Bank
 
 ### Visualisation
 
