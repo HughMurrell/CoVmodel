@@ -21,7 +21,7 @@ Data from John Hopkins, cleaned by the julia notebook
 above is loaded by the script and then the user can experiment with
 the SIR parameters and obtain simulated predictions of how the 
 pandemic will play out. The link to the script is
-![SIRjh](https://hughmurrell.github.io/CoVmodel/SIRjh/index.html "here")
+[here](https://hughmurrell.github.io/CoVmodel/SIRjh/index.html)
 
 ### `SIRou`
 
@@ -31,7 +31,7 @@ by the script and then the user can experiment with
 the SIR parameters for simulated predictions. 
 An attempt will be made to enable the app itself to optimise SIR parameters.
 The link to the script is
-![SIRjh](https://hughmurrell.github.io/CoVmodel/SIRou/index.html "here")
+[here](https://hughmurrell.github.io/CoVmodel/SIRou/index.html)
 
 ### Data Sets
 
