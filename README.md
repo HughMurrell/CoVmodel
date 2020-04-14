@@ -2,9 +2,9 @@
 
 ## Simple SIR models for COVID-19 breakout
 
-In this repository we present a Julia notebook and two JavaScript apps for
+In this repository we present a Julia notebook for
 simulating the COVID-19 breakout in South Africa and outher countries using 
-a simple SIR model and the case counts open data sets.
+a simple SIR model and case counts from open data sets.
 
 ### `SIRjulia`
 
@@ -16,21 +16,22 @@ the user to observe the effect of government interventions.
 
 ### `SIRjh`
 
-This directory contains a javascript code for running discrete piecewise 
-SIR simulations in the web browser. 
+This javascript code runs piecewise SIR simulations in the web browser. 
 Data from John Hopkins, cleaned by the julia notebook
 above is loaded by the script and then the user can experiment with
 the SIR parameters and obtain simulated predictions of how the 
-pandemic will play out.
+pandemic will play out. The link to the script is
+![SIRjh](https://hughmurrell.github.io/CoVmodel/SIRjh/index.html "here")
 
 ### `SIRou`
 
-This directory contains a javascript code for running discrete piecewise 
-SIR simulations in the web browser. 
+This javascript code also runs SIR simulations in the web browser. 
 Case counts and Stringency indices from Oxford University are used 
 by the script and then the user can experiment with
 the SIR parameters for simulated predictions. 
 An attempt will be made to enable the app itself to optimise SIR parameters.
+The link to the script is
+![SIRjh](https://hughmurrell.github.io/CoVmodel/SIRou/index.html "here")
 
 ### Data Sets
 
