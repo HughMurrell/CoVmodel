@@ -33,8 +33,8 @@ The link to the javascript is
 ### `RtLive`
 
 This directory contains a Jupyter notebook with Julia code for estimating
-$R-T$ in real time. The code uses maximum likelyhood to estimate the
-"most likely" $R$ value for a population at time $t$. The code is a
+R_t in real time. The code uses maximum likelyhood to estimate the
+"most likely" R value for a population at time t. The code is a
 direct translation from the Python code discribed at [http://rt.live/](http://rt.live/)
 and made available to the public as a Jupyter notebook with accompanying
 explanations of the methods employed.
@@ -55,7 +55,7 @@ Below is a visualisation of the early breakout of COVID-19 in South Africa.
 This graphic can be generated using the `covid_sir.ipynb` notebook from the `SIRjulia`
 directory.
 
-Next is a visualisation of $R_t$ over time for the COVID-19 South African case counts.
+Next is a visualisation of R_t over time for the COVID-19 South African case counts.
 
 ![alt text](https://github.com/HughMurrell/CoVmodel/blob/master/RtLive/plots/Rt_SouthAfrica.png "Rt Live, South Africa")
 
