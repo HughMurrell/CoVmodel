@@ -10,7 +10,7 @@
 
 \title{Estimating $\mathcal{R}_t$ from Covid-19 case counts, \\
 an instruction manual for a DIY lockdown project }
-\author{ Hugh Murrell}
+\author{ Hugh Murrell and Daniel Murrell}
 \maketitle
 
 \begin{abstract}
@@ -102,7 +102,7 @@ example trajectory.
 
 \begin{figure}[ht]
 \begin{center}
-  \epsfig{file=fig_RtSIM.png,height=2in}
+  \epsfig{file=figs/fig_RtSIM.png,height=2in}
 \end{center}
 \caption{Susceptible and Infectious time series
 for user defined parameters, $\gamma = \frac{1}{7}$, $N=10^6$ and $\beta = 2 \frac{\gamma}{N}$.
@@ -249,7 +249,7 @@ see figure \ref{fig_empirical_onset_dist}.
 
 \begin{figure}[H]
 \begin{center}
-  \epsfig{file=fig_empirical_onset_dist.png,height=2in}
+  \epsfig{file=figs/fig_empirical_onset_dist.png,height=2in}
 \end{center}
 \caption{Empirical onset delay distribution from US case data,  see \cite{systrom} for details.}  
 \label{fig_empirical_onset_dist}
@@ -262,7 +262,7 @@ and scale 5, see figure \ref{fig_weibull}
 
 \begin{figure}[H]
 \begin{center}
-  \epsfig{file=fig_weibull.png,height=2in}
+  \epsfig{file=figs/fig_weibull.png,height=2in}
 \end{center}
 \caption{Weibull(2,5) distribution for simulating onset delay.}  
 \label{fig_weibull}
@@ -293,7 +293,7 @@ are depicted in figure \ref{fig_onset_now_za}.
 
 \begin{figure}[H]
 \begin{center}
-  \epsfig{file=fig_onset_now_ZA.png,width=4in}
+  \epsfig{file=figs/fig_onset_now_ZA.png,width=4in}
 \end{center}
 \caption{South African case counts after onset and nowcasting correction.}  
 \label{fig_onset_now_za}
@@ -305,7 +305,7 @@ to onset correction, are shown in figure \ref{fig_rt_inf_za}.
 
 \begin{figure}[H]
 \begin{center}
-  \epsfig{file=fig_rt_inf_za.png,width=4in}
+  \epsfig{file=figs/fig_rt_inf_za.png,width=4in}
 \end{center}
 \caption{Tracking $\mathcal{R}_t$ (left) and $I_t$ (right) from South African case counts.
 Note that $w$ days of $\mathcal{R}_t$ estimates have been discarded where $w$ is
@@ -318,7 +318,7 @@ analysis on South African provincial case counts. Results are shown in figure \r
 
 \begin{figure}[H]
 \begin{center}
-  \epsfig{file=fig_rt_inf_prov.png, height=6in}
+  \epsfig{file=figs/fig_rt_inf_prov.png, height=6in}
 \end{center}
 \label{fig_rt_inf_prov}
 \end{figure}
@@ -332,8 +332,8 @@ for the DSFSI \cite{dsfsi} using Systrom's code, \cite{systrom}. The comparison 
 
 \begin{figure}[H]
 \begin{center}
-\epsfig{file=fig_rt_za.png,width=3in}
-  \epsfig{file=fig_heerden.png,width=3in}
+\epsfig{file=figs/fig_rt_za.png,width=3in}
+  \epsfig{file=figs/fig_heerden.png,width=3in}
 \end{center}
 \caption{Comparing South African $\mathcal{R}_t$ trajectories, a frequentist approach (top)
 and a Bayesian approach (bottom).}
