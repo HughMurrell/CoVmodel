@@ -1,0 +1,10 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{The standard SI model}{}% 2
+\BOOKMARK [1][-]{section.3}{Introducing Rt}{}% 3
+\BOOKMARK [1][-]{section.4}{Estimating Rt from case count data}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Pseudocode}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{Onset estimation and nowcasting}{section.4}% 6
+\BOOKMARK [1][-]{section.5}{Implementation on South African data}{}% 7
+\BOOKMARK [1][-]{section.6}{Sanity check}{}% 8
+\BOOKMARK [1][-]{section.7}{Conclusions}{}% 9
+\BOOKMARK [1][-]{section.8}{Acknowledgements}{}% 10
