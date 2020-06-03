@@ -105,7 +105,7 @@ example trajectory.
   \epsfig{file=figs/fig_RtSIM.png,height=2in}
 \end{center}
 \caption{Susceptible and Infectious time series
-for user defined parameters, $\gamma = \frac{1}{7}$, $N=10^6$ and $\beta = 2 \frac{\gamma}{N}$.
+for user defined parameters, $\gamma = \frac{1}{7}$, $N=10^6$ and $\beta = 2 \gamma$.
 }  
 \label{fig1}
 \end{figure}
@@ -139,7 +139,7 @@ which is called the {\bf basic} reproduction number and tells us how many
 persons an infected person will infect during their infectious period at the
 start of an epidemic and before any interventions can be mounted.
 In the case depicted in figure \ref{fig1}, the basic reproduction number is
-$\mathcal{R}_0 = \frac{\beta}{\gamma} S_0 = 2 $.
+$\mathcal{R}_0 = \frac{\beta}{\gamma} \frac{S_0}{N} = 2 $.
 
 Note that if no interventions are put in place during the course of the epidemic 
 then $\mathcal{R}_t$ will decrease monotonically as $S_t$ decreases.
@@ -158,7 +158,7 @@ release Covid-19 data.
 
 Almost all modern attempts at estimating $\mathcal{R}_t$ implement
 Bayes's rule to estimate current $\mathcal{R}_t$ from previous values
-of $\mathcal{R}_t$, see for example \cite{Bettencourt} for the theory 
+of $\mathcal{R}_t$, see for example \cite{bettencourt} for the theory 
 and \cite{systrom} for a recent implementation. Here we will use a
 frequentist approach and with the use of a simple smoothing filter
 we will show how to estimate $\mathcal{R}_t$ directly from the data.
@@ -227,7 +227,7 @@ apply {\it nowcasting} to $\mathcal{C}_t$\;
 compute the infectious pool time series according to equation \ref{eq5}\;
 compute the $\mathcal{R}_t$  time series according to equation \ref{eq4}\; 
 \If{$ \frac{I_t}{max( I_t )} < \delta$}{set corresponding $\mathcal{R}_t =0$}
-discard unreliable estimates due to onset correction
+discard unreliable estimates due to onset correction\;
 \Indm
  \Output{$\mathcal{R}_t$ effective reproduction rate estimates}
 \label{alg1}
@@ -380,6 +380,9 @@ We also thank Benjamin Murrell for enlightening us as to the intricacies of Baye
  
 \bibitem{mediahack}Media Hack Collective, {\em Coronavirus in South Africa},
 \href{https://mediahack.co.za/datastories/coronavirus/dashboard/}{Dashboard}.
+
+\bibitem{murrell}Hugh Murrell, {\em SIR models for Covid-19 data},
+\href{https://hughmurrell.github.io/CoVmodel/index.html}{hughmurrell.github.io/CoVmodel/index.html}.
 
 \end{thebibliography}
 \end{document}
