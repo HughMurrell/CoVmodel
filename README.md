@@ -17,6 +17,11 @@ explanations of the methods employed. Version 2 and 3 are modifications
 of that code with version 3 implementing a simple fast discrete estimation of
 Rt from daily case counts.
 
+### `RtData`
+
+This directory contains a julia script for extracting CoVid-19 data sets from the web,
+concatonating them and augmenting them with Rt estimates.
+
 ### `RtPaper`
 
 This directory contains latex source for an article describing how we perform simple
