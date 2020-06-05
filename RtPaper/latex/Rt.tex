@@ -3,13 +3,17 @@
 \usepackage{float}
 \usepackage[]{algorithm2e}
 \usepackage{hyperref}
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1ex}
 \setlength{\AlCapSkip}{1em}
+\newcommand{\etal}{\textit{et al.}}
 \begin{document}
 
 \title{Estimating $\mathcal{R}_t$ from Covid-19 case counts, \\
-an instruction manual for a DIY lockdown project }
+using SIR finite difference models }
 \author{ Hugh Murrell and Daniel Murrell}
 \maketitle
 
@@ -282,6 +286,47 @@ accomplish this:
 
 We apply this correction by dividing our onset time series by the CDF of our Weilbull distribution after it has been 
 augmented with a sufficient number of ones and reversed, thus removing the right censoring.
+
+\section{Creditable Intervals}
+
+To obtain {\em confidence} in our estimates we must invoke {\em Bayes} and consider a range of possible
+$\mathcal{R}_t$ values at any one time. To this end we maintain a day by day probability distribution of
+$\mathcal{R}_t$ values, call them  $\mathcal{R}_t^s$, and for each one estimate the next day
+infectious population using equation \ref{eq3b} as
+
+\begin{eqnarray}
+\mathcal{I}_{t+1}^s & = & I_t ( 1 +\gamma  ( \mathcal{R}_t ^s - 1 )  ) \label{eq8} 
+\end{eqnarray}
+
+After seeing the next day's data,  $k = I_{t+1}$, we calculate the {\em likelihood} of each of our estimates by computing
+the probability that a {\em Poisson} distribution with parameter $\lambda = \mathcal{I}_{t+1}^s$
+would deliver the observed data:
+
+\begin{eqnarray}
+\mathcal{L}_{t+1}^s & =  & \mathcal{P}(I_{t+1} | \mathcal{R}_t^s ) =  \text{Pois}(k;  \lambda)  = \frac{\lambda^k e^{-\lambda}}{k!} \label{eq9} 
+\end{eqnarray}
+
+We then use {\em Bayes' rule} to tabulate the probability distribution $\mathcal{R}_t^s$ having seen the next day's data.
+
+\begin{eqnarray}
+\mathcal{P}(\mathcal{R}_t^s | I_{t+1} ) & \propto  & \mathcal{P}(I_{t+1} | \mathcal{R}_t^s )  \mathcal{P}(\mathcal{R}_t^s  )  \label{eq10} 
+\end{eqnarray}
+
+and we select the most likely $\mathcal{R}_t$ as $\mathcal{R}_t^{s^*}$ where
+
+\begin{eqnarray}
+s^* & = & \argmax_s ( \mathcal{P}(\mathcal{R}_t^s | I_{t+1} ) )  \label{eq11} 
+\end{eqnarray}
+ 
+ and as a bonus we obtain a so called {\em 90\% creditable interval} for our most likely estimate by
+ finding the region of the distribution, $\mathcal{R}_t^s$ , that supports 90\% of its density, see \cite{easystats}
+ for a full description.
+ 
+ We note here that using Bayes in this way is computationally expensive, of the order $\mathcal{O}(n * d)$
+ where $n$ is the length of our time series and $d$ is the size of our distribution grid. And since we intend
+ to compute $\mathcal{R}_t$ estimates for thousand of time series each day we will only perform the 
+ {\em full Bayesian} inference on demand thus making use of the user's processing power to infer $\mathcal{R}_t$
+ estimates with creditable intervals on user selected time series only.
  
 \section{Implementation on South African data}
 
@@ -325,19 +370,19 @@ analysis on South African provincial case counts. Results are shown in figure \r
 
 \section{Sanity check}
 
-To provide some confidence that our simple finite difference algorithm behaves
-similarly to the Bayesian posterior mean for $\mathcal{R}_t$ estimation on
-South African data we  juxtapose our result with an implementation by Schalk van Heerden
-for the DSFSI \cite{dsfsi} using Systrom's code, \cite{systrom}. The comparison is shown in figure \ref{fig_heerden}.
+To provide evidence that our simple finite difference algorithm behaves
+similarly to the Bayesian posterior mean we  juxtapose both methods on
+for $\mathcal{R}_t$ estimation on
+South African case counts. The comparison is shown in figure \ref{fig_comp}.
 
 \begin{figure}[H]
 \begin{center}
-\epsfig{file=figs/fig_rt_za.png,width=3in}
-  \epsfig{file=figs/fig_heerden.png,width=3in}
+\epsfig{file=figs/fig_Rt_ZA.png,width=3in}
+  \epsfig{file=figs/fig_Rt_ZA_Bayes,width=3in}
 \end{center}
 \caption{Comparing South African $\mathcal{R}_t$ trajectories, a frequentist approach (top)
 and a Bayesian approach (bottom).}
-\label{fig_heerden}
+\label{fig_comp}
 \end{figure}
 
 \section{Conclusions}
@@ -373,6 +418,9 @@ We also thank Benjamin Murrell for enlightening us as to the intricacies of Baye
 
 \bibitem{groundup} Max Price, Covid-19: {\em Making sense of R}, 
 \href{https://www.groundup.org.za/article/covid-19-making-sense-of-r}{GroundUp article}
+
+\bibitem{easystats} Makowski D, \etal,  {\em Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework}. Journal of Open Source Software, 4(40), 1541, see: 
+\href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{Creditable Intervals}
 
 \bibitem{news24} Sarah Evans, {\em Lockdown and other interventions potentially saved 20 000 lives},News 24, \href{https://www.news24.com/SouthAfrica/News/lockdown-and-other-interventions-potentially-saved-20-000-lives-top-scientist-20200513}{news24 article}
 

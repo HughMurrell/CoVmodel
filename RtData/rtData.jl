@@ -110,7 +110,7 @@ data[:,:format_date] .= (s->Date(string(s),DateFormat("dd-mm-yyyy"))).(data[:,:d
 function extract_za_prov(data)
     data_long = DataFrame(parent=String[], location=String[], date=Date[], cases=Float64[]) 
     for prov in names(data)[3:11]
-        data_prov = data[:,[:format_date, prov]]
+        data_prov = data[:,[:format_date, Symbol(prov)]]
         insertcols!(data_prov, 1, :parent => repeat(["South Africa"],size(data_prov)[1]))
         insertcols!(data_prov, 2, :location => repeat([string(prov)],size(data_prov)[1]))
         rename!(data_prov,names(data_long))
@@ -171,7 +171,7 @@ GAMMA = 1/IFP  # recovery rate
 SMOOTHING_PASSES = 3 # number of times to apply moving average filter to case data
 INF_CUTOFF = 0.0 # to detect when epidemic is over
 ONSET_DELAY = 4  # default onset delayin days, might get changed later
-FULL_BAYES = true # set true for Bayesean computation of mlrt plus density interval
+FULL_BAYES = false # set true for Bayesean computation of mlrt plus density interval
 println("IFP=",IFP," GAMMA=",GAMMA," SMOOTHING_PASSES=",
     SMOOTHING_PASSES," INF_CUTOFF=",INF_CUTOFF," ONSET_DELAY=",ONSET_DELAY, 
     " FULL_BAYES=",FULL_BAYES)
