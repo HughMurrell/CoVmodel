@@ -171,10 +171,16 @@ GAMMA = 1/IFP  # recovery rate
 SMOOTHING_PASSES = 3 # number of times to apply moving average filter to case data
 INF_CUTOFF = 0.0 # to detect when epidemic is over
 ONSET_DELAY = 4  # default onset delayin days, might get changed later
-FULL_BAYES = false # set true for Bayesean computation of mlrt plus density interval
+FULL_BAYES = true # set true for Bayesean computation of mlrt plus density interval
+RT_MAX = 12
+RTL = RT_MAX*100+1
+RT_RANGE = collect(range(0, RT_MAX, length=RTL))
+SIGMA = 0.013
+GW = DSP.Windows.gaussian(RTL,SIGMA)
+GW = GW ./ sum(GW)
 println("IFP=",IFP," GAMMA=",GAMMA," SMOOTHING_PASSES=",
     SMOOTHING_PASSES," INF_CUTOFF=",INF_CUTOFF," ONSET_DELAY=",ONSET_DELAY, 
-    " FULL_BAYES=",FULL_BAYES)
+    " FULL_BAYES=",FULL_BAYES, " RT_MAX=", RT_MAX, " RTL =", RTL, " SIGMA=", SIGMA)
 
 # create Weibull filter and helper ftns for adjusting for reporting delay
 adj_range = collect(1:1:30)
@@ -347,13 +353,14 @@ function highest_density_interval(pmf, p=.9)
     return best
 end    
 
-function get_posteriors(inf, sigma=0.23)
+function get_posteriors(inf)
     sr = inf # Int64.(floor.(inf))
     # (1) Calculate Lambda
-    RT_MAX = 12
-    rt_range = collect(range(0, RT_MAX, length=RT_MAX*100+1))
+    # RT_MAX = 12
+    # RTL = RT_MAX*100+1
+    # RT_RANGE = collect(range(0, RT_MAX, length=RTL))
     # GAMMA = 1/IFP   # done previously
-    lambdas = [ sr[i-1] .* exp.(GAMMA .* (rt_range .- 1)) for i in 2:length(sr)]
+    lambdas = [ sr[i-1] .* exp.(GAMMA .* (RT_RANGE .- 1)) for i in 2:length(sr)]
     lambdas = hcat(lambdas...)
 
     # (2) Calculate each day's likelihood
@@ -362,7 +369,8 @@ function get_posteriors(inf, sigma=0.23)
     lks = hcat(lks...)
     likelihoods = lks ./ sum(lks, dims=1)
     
-     # (3) Create the Gaussian Matrix
+    #=
+    # (3) Create the Gaussian Matrix
     nDist = [ Normal(rt,sigma) for rt in rt_range ]
     process_matrix = [ [pdf.(nDist[j],rt_range[i]) for i in 1:length(rt_range)] 
         for j in 1:length(rt_range)]
@@ -370,8 +378,13 @@ function get_posteriors(inf, sigma=0.23)
     
     # (3a) Normalize all rows to sum to 1
     process_matrix = process_matrix ./ sum(process_matrix, dims=2)
-    
     # process_matrix = I   # if you want current prior = previous posterior
+    =#
+
+    # an alternative to multiplying the prior by a Gaussian matrix
+    # is to convolve the prior with a Gaussian window
+    # gw = DSP.Windows.gaussian(RTL,sigma)
+    # gw = gw ./ sum(gw)
     
     # (4) Calculate the initial prior
     guess0 = 2+log(sr[2]/sr[1])/GAMMA
@@ -379,13 +392,13 @@ function get_posteriors(inf, sigma=0.23)
         guess0 = 1
     end
     # println(guess0)
-    prior0 = [ pdf.(Gamma(guess0),rt) for rt in rt_range ]
+    prior0 = [ pdf.(Gamma(guess0),rt) for rt in RT_RANGE ]
     prior0 = prior0 ./ sum(prior0)
     
     # Create a DataFrame that will hold our posteriors for each day
     # Insert our prior as the first posterior.
-    posteriors = DataFrame( [ Real for i in 1:length(sr) ], 
-        [ Symbol.("D$i") for i in 1:length(sr) ], length(rt_range) )
+    posteriors = DataFrame( [ Float64 for i in 1:length(sr) ], 
+        [ Symbol.("D$i") for i in 1:length(sr) ], RTL )
     days = names(posteriors)
     # posteriors[:,:rts] = rt_range
     posteriors[:,:D1] = prior0
@@ -400,7 +413,12 @@ function get_posteriors(inf, sigma=0.23)
     for (previous_day, current_day) in zip(1:nd-1, 2:nd)
 
         #(5a) Calculate the new prior
-        current_prior =   process_matrix * posteriors[:,Symbol("D$previous_day")] # 
+        # current_prior =   process_matrix * posteriors[:,Symbol("D$previous_day")] # 
+        # current_prior = convert.(Float64,posteriors[:,Symbol("D$previous_day")])
+        current_prior = conv(posteriors[:,Symbol("D$previous_day")], GW)
+        start=1+div(RTL-1,2)
+        stop=length(current_prior)-div(RTL-1,2)
+        current_prior = current_prior[start:stop]
         
         #(5b) Calculate the numerator of Bayes' Rule: P(k|R_t)P(R_t)
         numerator = likelihoods[:,current_day-1] .* current_prior
@@ -412,11 +430,13 @@ function get_posteriors(inf, sigma=0.23)
         posteriors[:,Symbol("D$current_day")] = numerator./denominator
         
         # Add to the running sum of log likelihoods
-        log_likelihood += log(denominator)
+        if denominator > 0
+            log_likelihood += log(denominator)
+        end
         
     end
     
-    return (posteriors, rt_range, log_likelihood)
+    return (posteriors, log_likelihood)
     
 end
 
@@ -455,10 +475,10 @@ for parent in parents
                     est_date = dc[end,:date]
                     # do full Bayesean inference if flag set
                     if FULL_BAYES
-                        (posteriors, rts, log_likelihood) = get_posteriors(dc[:,:infectives])
-                        mlrt_values = rts[map(x->x[1],findmax(Array(posteriors),dims=1)[2])[1,:]]
+                        (posteriors, log_likelihood) = get_posteriors(dc[:,:infectives])
+                        mlrt_values = RT_RANGE[map(x->x[1],findmax(Array(posteriors),dims=1)[2])[1,:]]
                         inds = [ highest_density_interval(posteriors[:,k]) for k in 1:size(posteriors)[2] ] 
-                        low_high = [rts[inds[k]] for k in 1:length(inds)]
+                        low_high = [RT_RANGE[inds[k]] for k in 1:length(inds)]
                         lows = map(x->x[1],low_high)
                         highs = map(x->x[2],low_high)
                         dc[:,:rt_ml]=mlrt_values
