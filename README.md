@@ -17,6 +17,15 @@ explanations of the methods employed. Version 2 and 3 are modifications
 of that code with version 3 implementing a simple fast discrete estimation of
 Rt from daily case counts.
 
+#### Visualisation
+
+Below is a visualisation of Rt over time for the COVID-19 South African case counts.
+
+![alt text](https://github.com/HughMurrell/CoVmodel/blob/master/RtLive/plots/RtLivePlusConfIntZA.png "Rt Live, South Africa")
+
+This graphic can be generated using the `RtLiveZA.ipynb` notebook from the `RtLive`
+directory.
+
 
 ### `SIRjulia`
 
@@ -25,18 +34,11 @@ and optimisation to fit a simple piecewise SIR model to John Hopkins case count 
 The piecewise nature of the model allows the user to observe the effect of government 
 interventions. A spreadsheet is also provided to create simple SIR simulations.
 
-### Visualisation
+#### Visualisation
 
 Below is a visualisation of the early breakout of COVID-19 in South Africa.
 
 ![alt text](https://github.com/HughMurrell/CoVmodel/blob/master/SIRjulia/covid_plots/SIRfitSouthAfrica.png "COVID-19 South Africa")
 
 This graphic can be generated using the `covid_sir.ipynb` notebook from the `SIRjulia`
-directory.
-
-Next is a visualisation of Rt over time for the COVID-19 South African case counts.
-
-![alt text](https://github.com/HughMurrell/CoVmodel/blob/master/RtLive/plots/Rt_SouthAfrica.png "Rt Live, South Africa")
-
-This graphic can be generated using the `RtLive.ipynb` notebook from the `RtLive`
 directory.
